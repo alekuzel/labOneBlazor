@@ -14,7 +14,7 @@
 
 <h2>Att göra-listan</h2>
 
-<!-- Add a background color to the to-do list -->
+<!-- light background for to do list -->
 <ul style="background-color: #D5F5E3; padding: 10px;">
     @foreach (var task in Tasks) //go through all existing tasks
     {
@@ -40,7 +40,7 @@
 @code {
     List<TaskElement> Tasks = new List<TaskElement> //list containing the tasks
     {
-        //some tasks ti start with
+        //some tasks to start with
         new TaskElement { ToDo = "Mata fiskarna", Done = false },
         new TaskElement { ToDo = "Kalas 24.02 12:00", Done = false },
     };
