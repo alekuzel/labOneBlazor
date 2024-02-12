@@ -1,0 +1,34 @@
+[
+  {
+    "code": "dt057g",
+    "name": "Webbutveckling I"
+  },
+  {
+    "code": "dt071g",
+    "name": "Programmering med C#"
+  },
+  {
+    "code": "DT197G",
+    "name": "Webbdesign för CMS"
+  },
+  {
+    "code": "IK060G",
+    "name": "Projektledning"
+  },
+   {
+      "code": "DT173G",
+      "name": "Webbutveckling III"
+    },
+  {
+    "code": "DT093G",
+    "name": "Webbutveckling II"
+  },
+  {
+    "code": "DT193G",
+    "name": "Fullstacks-utveckling med ramverk"
+  },
+  {
+    "code": "DT162G",
+    "name": "Javascriptbaserad webbutveckling"
+  }
+]

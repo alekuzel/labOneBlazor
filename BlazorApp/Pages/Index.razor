@@ -1,9 +1,85 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Startsidan</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Välkommen!</h1>
 
-Welcome to your new app.
+<p>
+    Denna webbplats är skapad i Visual Studio med hjälp av ASP.NET Blazor och Bootstrap. För närvarande körs det bara på Localhost och publiceras inte någonstans.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    Json-sidan innehåller listan över de kurser jag har läst på webbutvecklingsprogrammet.
+
+    Nedan finns en komponent med en att göra-lista. Där kan man lägga till nya uppgifter, klicka på uppgifter för att markera dem som klara och ta bort uppgifter permanent.
+</p>
+
+<h2>Att göra-listan</h2>
+
+<!-- Add a background color to the to-do list -->
+<ul style="background-color: #D5F5E3; padding: 10px;">
+    @foreach (var task in Tasks) //go through all existing tasks
+    {
+        <li style="cursor: pointer;" @onclick="() => ChangeTaskStatus(task)">
+            <!--when task is clicked, the status of a task is changed - it is overlined as done, or overline is removed -->
+            <!--here the value of text-decoration is derived from the LineThroughTask method-->
+            <span style="text-decoration: @LineThroughTask(task)">@task.ToDo</span>
+            <!-- delete buttons with delete icons -->
+            <button class="btn btn-danger" @onclick="() => DeleteTask(task)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </li>
+    }
+</ul>
+
+<!--input field for creating new tasks. the input here is binded to the property "NewTask"-->
+<input type="text" @bind="NewTask" />
+<button @onclick="AddNewTask" class="btn btn-primary">Skapa</button>
+
+<!-- link to font awsome file to use delete icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+@code {
+    List<TaskElement> Tasks = new List<TaskElement> //list containing the tasks
+    {
+        //some tasks ti start with
+        new TaskElement { ToDo = "Mata fiskarna", Done = false },
+        new TaskElement { ToDo = "Kalas 24.02 12:00", Done = false },
+    };
+    string NewTask;
+
+    void AddNewTask() //this method created new tasks whenever the skapa-hutton is clicked in the form
+    {
+        if (!string.IsNullOrWhiteSpace(NewTask))
+        {
+            Tasks.Add(new TaskElement { ToDo = NewTask, Done = false });
+            NewTask = string.Empty;
+        }
+    }
+
+    void ChangeTaskStatus(TaskElement task) //method which switches between task status
+    {
+        task.Done = !task.Done;
+    }
+
+    void DeleteTask(TaskElement task) //method which deletes the tasks from the list
+    {
+        Tasks.Remove(task);
+    }
+
+    string LineThroughTask(TaskElement task) //if the Done is true, this method returns line-through and the task will be crossed.
+                                             //otherwise it returns none and the task is not crossed
+    {
+        return task.Done ? "line-through" : "none";
+    }
+
+    public class TaskElement //this class contains the two properties of the task element
+    {
+        public string ToDo { get; set; }
+        public bool Done { get; set; }
+    }
+}
+
+    <style>
+.btn-danger{
+    padding: 0.5vh;
+}
+</style>

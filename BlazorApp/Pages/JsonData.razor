@@ -1,0 +1,74 @@
+﻿@page "/json"
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment env
+
+<PageTitle>JSON</PageTitle>
+
+<h1>JSON</h1>
+
+@if (data != null)
+{
+ 
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-primary">
+                
+                <tr>
+                    <th>Kurskod</th>
+                    <th>Kursnamn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in courses)//go through all the courses...
+                {
+                    <tr>
+                        <td>@item.code</td><!--display course code in column Kurskod-->
+                        <td>@item.name</td><!--and course names in column Kursnamn-->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>The Json file is currently empty</p>
+    //show this if there is nothing in the Json file
+}
+
+@code {
+    private string data;
+    private List<Course> courses;
+
+    protected override async Task OnInitializedAsync() //method is called on initialisation of the component
+    {
+        try
+        {
+            var filePath = System.IO.Path.Combine(env.WebRootPath, "file.json");
+            // read the contents of the JSON file
+            data = await File.ReadAllTextAsync(filePath);
+            // deserialize JSON data into list of objects
+            courses = JsonSerializer.Deserialize<List<Course>>(data);
+        }
+        catch (Exception ex)
+        {
+            // dislay errors if they occur
+            data = "An error occurred: " + ex.Message;
+        }
+    }
+
+    public class Course //class which containt the properties of the Class element
+    {
+        public string code { get; set; }
+        public string name { get; set; }
+    }
+}
+
+
+<style>
+    .table-primary{
+        background-color: yellowgreen;
+
+    }
+</style>

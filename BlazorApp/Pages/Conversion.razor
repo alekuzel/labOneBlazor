@@ -1,0 +1,36 @@
+﻿@page "/conversion"
+
+<PageTitle>Conversion page</PageTitle>
+
+<h1>Konversion</h1>
+
+<label for="meter">Meter:</label>
+<input type="number" class="form-control" @bind="meter" />
+<br />
+<button class="btn btn-primary" @onclick="Calculate">Räkna</button>
+<br />
+<br />
+<h3>Resultat: @feet.ToString("0.##") feet</h3>
+<label for="km">Km/h:</label>
+<input type="number" class="form-control" @bind="km" />
+<br />
+<button class="btn btn-primary" @onclick="CalculateKm">Räkna</button>
+<br />
+<h3>Resultat: @miles.ToString("0") miles/h</h3>
+
+@code {
+    private double feet;
+    private double meter;
+    private double km;
+    private double miles;
+
+    private void Calculate()
+    {
+        feet = meter * 3.28084; // multiply to get number of feet in given number of meters
+    }
+    private void CalculateKm()
+    {
+        miles = km * 0.621371; // multiply to get miles/h in given km/h
+    }
+}
+
